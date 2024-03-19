@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitlab-runner
+  namespace: gitlab-runner
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: gitlab-runner
+  template:
+    metadata:
+      labels:
+        app: gitlab-runner
+    spec:
+      containers:
+      - name: gitlab-runner
+        image: gitlab/gitlab-runner:latest
+        env:
+        - name: CI_SERVER_URL
+          value: "10.17.72.237"
+        - name: REGISTRATION_TOKEN
+          value: "ws8xy6f1racS429YzD2d"
+        - name: RUNNER_EXECUTOR
+          value: "kubernetes"
+        - name: RUNNER_TAGS
+          value: "kubernetes,dev"
